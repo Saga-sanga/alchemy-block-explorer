@@ -1,26 +1,26 @@
 function BlockInfo({ blockWithTransactions: blockInfo }) {
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mx-10 text-left">
       <div className="flex gap-2 mb-4">
-        <div className="col-md-3">Block Height:</div>
-        <div className="col-md-9">{blockInfo.number}</div>
+        <div className="basis-1/4">Block Height:</div>
+        <div className="basis-3/4">{blockInfo.number}</div>
       </div>
       <div className="flex gap-2 mb-4">
-        <div className="col-md-3">Timestamp:</div>
-        <div className="col-md-9">{new Date(blockInfo.timestamp).toString()}</div>
+        <div className="basis-1/4">Timestamp:</div>
+        <div className="basis-3/4">{new Date(blockInfo.timestamp).toString()}</div>
       </div>
       <div className="flex gap-2 mb-4">
-        <div className="col-md-3">Hash: </div>
-        <div className="col-md-9">{blockInfo.hash}</div>
+        <div className="basis-1/4">Hash: </div>
+        <div className="basis-3/4">{blockInfo.hash}</div>
       </div>
       <div className="flex gap-2 mb-4">
-        <div className="col-md-3">Miner: </div>
-        <div className="col-md-9">{blockInfo.miner}</div>
+        <div className="basis-1/4">Miner: </div>
+        <div className="basis-3/4">{blockInfo.miner}</div>
       </div>
       <div className="flex gap-2 mb-4">
-        <div className="col-md-3">Transactions: </div>
-        <div className="col-md-9">{`${blockInfo.transactions.length} transactions`}</div>
+        <div className="basis-1/4">Transactions: </div>
+        <div className="basis-3/4">{`${blockInfo.transactions.length} transactions`}</div>
       </div>
     </div>
   )
