@@ -1,14 +1,17 @@
 import { Utils } from "alchemy-sdk";
-import clipboard from '../assets/clipboard.svg'
+import clipboard from "../assets/clipboard.svg";
 
-function Transactions({ blockTransactions: transactions, handleTransactionClick }) {
+function Transactions({
+  blockTransactions: transactions,
+  handleTransactionClick,
+}) {
   function copyHandler(e) {
     // console.log(e.currentTarget.value);
     navigator.clipboard
       .writeText(e.currentTarget.value)
       .then(() => alert("Text copied to clipboard"))
       .catch((err) => console.error("Error: ", err));
-  };
+  }
   // console.log(transactions[0])
   return (
     <>
@@ -30,14 +33,22 @@ function Transactions({ blockTransactions: transactions, handleTransactionClick 
               <tr className="text-sm" key={i}>
                 <th>{i + 1}</th>
                 <td>
-                  <button onClick={handleTransactionClick} value={transaction.hash}>
+                  <button
+                    className="text-blue-500 hover:text-blue-700"
+                    onClick={handleTransactionClick}
+                    value={transaction.hash}
+                  >
                     {`${transaction.hash.slice(
                       0,
                       10
                     )}...${transaction.hash.slice(-10)}`}
                   </button>
-                  <button className="pl-1" value={transaction.hash} onClick={copyHandler}>
-                    <img alt="clipboard icon" src={clipboard}/>
+                  <button
+                    className="pl-1"
+                    value={transaction.hash}
+                    onClick={copyHandler}
+                  >
+                    <img alt="clipboard icon" src={clipboard} />
                   </button>
                 </td>
                 <td>{`${transaction.from.slice(

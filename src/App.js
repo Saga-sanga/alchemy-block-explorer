@@ -77,6 +77,8 @@ function App() {
 
   useMemo(() => console.log(blockWithTransactions), [blockWithTransactions]);
 
+  // TODO: Add Route to components
+
   return (
     <div className="App">
       {/* Navbar */}

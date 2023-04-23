@@ -34,6 +34,7 @@ function BlockInfo({ blockWithTransactions: blockInfo, toggleTransactions }) {
           <div className="basis-1/4">Miner: </div>
           <div className="basis-3/4">{blockInfo.miner}</div>
         </div>
+        <hr className="border-neutral-content mb-4"/>
         <div className="flex gap-2 mb-4">
           <div className="basis-1/4">Gas Used: </div>
           <div className="basis-3/4 flex items-center gap-8">
