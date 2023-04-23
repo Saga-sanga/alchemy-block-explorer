@@ -24,37 +24,65 @@ function App() {
   const [blockNumber, setBlockNumber] = useState();
   const [blockWithTransactions, setBlockWithTransactions] = useState();
 
+  function handleBlockChange(event) {
+    event.preventDefault();
+    const input = document.getElementById("search").value;
+
+    console.log(input);
+    setBlockNumber(input);
+  }
+
   useEffect(() => {
     async function getBlockNumber() {
       setBlockNumber(await alchemy.core.getBlockNumber());
     }
 
     getBlockNumber();
-  });
+  }, []);
 
   useEffect(() => {
-    async function getBlockWithTransactions() {
-      setBlockWithTransactions(
-        await alchemy.core.getBlockWithTransactions(blockNumber)
-      );
+    async function getBlockNumber() {
+      setBlockWithTransactions(await alchemy.core.getBlockWithTransactions(parseInt(blockNumber)));
     }
 
-    getBlockWithTransactions();
+    getBlockNumber();
   }, [blockNumber]);
+
+  // useEffect(() => {
+  //   async function getBlockWithTransactions() {
+  //     setBlockWithTransactions(
+  //       await alchemy.core.getBlockWithTransactions(blockNumber)
+  //     );
+  //   }
+
+  //   getBlockWithTransactions();
+  // }, [blockNumber]);
 
   useMemo(() => console.log(blockWithTransactions), [blockWithTransactions]);
 
   return (
     <div className="App">
-      <span className="text-2xl">Block #{blockNumber}</span>
-      {blockWithTransactions ? (
-        <>
-          <BlockInfo blockWithTransactions={blockWithTransactions} />
-          <Transactions blockTransactions={blockWithTransactions.transactions}/>
-        </>
-      ) : (
-        <div>Loading...</div>
-      )}
+      <div className="navbar bg-base-100">
+        <a href="/" className="btn btn-ghost hover:bg-transparent normal-case text-xl">BlockExplorer</a>
+      </div>  
+      <main className="flex flex-col gap-8">
+        <form className="flex gap-2 justify-center" onSubmit={handleBlockChange}>
+          <input id="search" type="text" placeholder="Enter Block Number" className="input input-bordered w-full max-w-xs" />
+          <button type="submit" className="btn btn-primary">Search</button>
+        </form>
+        
+        {blockWithTransactions ? (
+          <>
+            <BlockInfo blockWithTransactions={blockWithTransactions} />
+            {/* <Transactions blockTransactions={blockWithTransactions.transactions}/> */}
+          </>
+        ) : (
+          <div>
+            <div>Loading...</div>
+            <progress className="progress w-56"></progress>
+          </div>
+        )}
+      </main>
     </div>
   );
 }
