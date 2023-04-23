@@ -18,16 +18,17 @@ function Transactions({ blockTransactions: transactions }) {
             </tr>
           </thead>
           <tbody>
-
-            {transactions.map((transaction, i) => 
+            {transactions.map((transaction, i) => (
               <tr className="text-sm" key={i}>
                 <th>{i + 1}</th>
                 <td>{transaction.hash}</td>
                 <td>{transaction.from}</td>
                 <td>{transaction.to}</td>
-                <td>{`${Utils.formatEther(transaction.value.toString())} Eth`}</td>
-              </tr>)}
-        
+                <td>{`${Utils.formatEther(
+                  transaction.value.toString()
+                )} Eth`}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

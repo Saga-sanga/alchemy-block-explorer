@@ -42,7 +42,9 @@ function App() {
 
   useEffect(() => {
     async function getBlockNumber() {
-      setBlockWithTransactions(await alchemy.core.getBlockWithTransactions(parseInt(blockNumber)));
+      setBlockWithTransactions(
+        await alchemy.core.getBlockWithTransactions(parseInt(blockNumber))
+      );
     }
 
     getBlockNumber();
@@ -63,14 +65,29 @@ function App() {
   return (
     <div className="App">
       <div className="navbar bg-base-100">
-        <a href="/" className="btn btn-ghost hover:bg-transparent normal-case text-xl">BlockExplorer</a>
-      </div>  
+        <a
+          href="/"
+          className="btn btn-ghost hover:bg-transparent normal-case text-xl"
+        >
+          BlockExplorer
+        </a>
+      </div>
       <main className="flex flex-col gap-8">
-        <form className="flex gap-2 justify-center" onSubmit={handleBlockChange}>
-          <input id="search" type="text" placeholder="Enter Block Number" className="input input-bordered w-full max-w-xs" />
-          <button type="submit" className="btn btn-primary">Search</button>
+        <form
+          className="flex gap-2 justify-center"
+          onSubmit={handleBlockChange}
+        >
+          <input
+            id="search"
+            type="text"
+            placeholder="Enter Block Number"
+            className="input input-bordered w-full max-w-xs"
+          />
+          <button type="submit" className="btn btn-primary">
+            Search
+          </button>
         </form>
-        
+
         {blockWithTransactions ? (
           <>
             <BlockInfo blockWithTransactions={blockWithTransactions} />
