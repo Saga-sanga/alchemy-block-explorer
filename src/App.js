@@ -4,6 +4,7 @@ import BlockInfo from "./components/BlockInfo";
 
 import "./App.css";
 import Transactions from "./components/Transactions";
+import TransactionDetails from "./components/TransactionDetails";
 
 // Refer to the README doc for more information about using API
 // keys in client-side code. You should never do this in production
@@ -18,15 +19,26 @@ const settings = {
 //
 // You can read more about the packages here:
 //   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings);
+export const alchemy = new Alchemy(settings);
 
 function App() {
-  const [blockNumber, setBlockNumber] = useState();
-  const [blockWithTransactions, setBlockWithTransactions] = useState();
+  const [blockNumber, setBlockNumber] = useState(0);
+  const [blockWithTransactions, setBlockWithTransactions] = useState(null);
   const [showTransactions, setShowTransactions] = useState(false);
+  const [showTransactionDetails, setShowTransactionDetails] = useState(false);
+  const [txnHash, setTxnHash] = useState("");
 
   function toggleTransactions() {
     setShowTransactions(!showTransactions);
+  }
+
+  function handleTransactionClick(event) {
+    event.preventDefault();
+
+    console.log(event.currentTarget.value);
+    setTxnHash(event.currentTarget.value);
+    setShowTransactionDetails(true);
+    // Push Route to transaction details, pass transaction details to Component
   }
 
   function handleBlockChange(event) {
@@ -52,23 +64,22 @@ function App() {
       );
     }
 
-    getBlockNumber();
+    let isCancelled = false;
+
+    if (!isCancelled) {
+      getBlockNumber();
+    }
+
+    return () => {
+      isCancelled = true;
+    }
   }, [blockNumber]);
-
-  // useEffect(() => {
-  //   async function getBlockWithTransactions() {
-  //     setBlockWithTransactions(
-  //       await alchemy.core.getBlockWithTransactions(blockNumber)
-  //     );
-  //   }
-
-  //   getBlockWithTransactions();
-  // }, [blockNumber]);
 
   useMemo(() => console.log(blockWithTransactions), [blockWithTransactions]);
 
   return (
     <div className="App">
+      {/* Navbar */}
       <div className="navbar bg-base-100">
         <a
           href="/"
@@ -77,6 +88,8 @@ function App() {
           BlockExplorer
         </a>
       </div>
+
+      {/* Main content body */}
       <main className="flex flex-col gap-8">
         <form
           className="flex gap-2 justify-center"
@@ -93,6 +106,8 @@ function App() {
           </button>
         </form>
 
+        {showTransactionDetails ? (<TransactionDetails txnHash={txnHash} />) : <></>}
+
         {blockWithTransactions ? (
           <>
             <BlockInfo
@@ -103,6 +118,7 @@ function App() {
             {showTransactions ? (
               <Transactions
                 blockTransactions={blockWithTransactions.transactions}
+                handleTransactionClick={handleTransactionClick}
               />
             ) : (
               <></>

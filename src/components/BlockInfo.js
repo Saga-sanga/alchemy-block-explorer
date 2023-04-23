@@ -5,7 +5,7 @@ function BlockInfo({ blockWithTransactions: blockInfo, toggleTransactions }) {
   return (
     <div className="flex flex-col gap-4">
       <span className="text-2xl font-bold">Block #{blockInfo.number}</span>
-      <div className="flex flex-col mx-10 text-left">
+      <div className="flex flex-col mx-10 text-left w-full mx-auto max-w-5xl">
         <div className="flex gap-2 mb-4">
           <div className="basis-1/4">Block Height:</div>
           <div className="basis-3/4">{blockInfo.number}</div>

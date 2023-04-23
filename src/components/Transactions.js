@@ -1,7 +1,7 @@
 import { Utils } from "alchemy-sdk";
 import clipboard from '../assets/clipboard.svg'
 
-function Transactions({ blockTransactions: transactions }) {
+function Transactions({ blockTransactions: transactions, handleTransactionClick }) {
   function copyHandler(e) {
     // console.log(e.currentTarget.value);
     navigator.clipboard
@@ -30,10 +30,12 @@ function Transactions({ blockTransactions: transactions }) {
               <tr className="text-sm" key={i}>
                 <th>{i + 1}</th>
                 <td>
-                  {`${transaction.hash.slice(
-                    0,
-                    10
-                  )}...${transaction.hash.slice(-10)}`}
+                  <button onClick={handleTransactionClick} value={transaction.hash}>
+                    {`${transaction.hash.slice(
+                      0,
+                      10
+                    )}...${transaction.hash.slice(-10)}`}
+                  </button>
                   <button className="pl-1" value={transaction.hash} onClick={copyHandler}>
                     <img alt="clipboard icon" src={clipboard}/>
                   </button>
