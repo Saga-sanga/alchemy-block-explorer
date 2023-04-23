@@ -8,14 +8,18 @@ function TransactionDetails({ txnHash }) {
   console.log(txnHash)
 
   useEffect(() => {
-    if (!txnHash) return;
+    let isCancelled = false;
 
-    const fetchTransactionReceipt = async () => {
-      const txnReceipt = await alchemy.core.getTransactionReceipt(txnHash);
-      setTransactionReceipt(txnReceipt);
-    } 
+    alchemy.core.getTransactionReceipt(txnHash).then((res) => {
+      if (!isCancelled) {
+        setTransactionReceipt(res);
+      }
+    })
 
-    fetchTransactionReceipt();
+    return () => {
+      isCancelled = true;
+    }
+
   }, [txnHash])
   
   console.log(transactionReceipt);

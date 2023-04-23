@@ -58,26 +58,22 @@ function App() {
   }, []);
 
   useEffect(() => {
-    async function getBlockNumber() {
-      setBlockWithTransactions(
-        await alchemy.core.getBlockWithTransactions(parseInt(blockNumber))
-      );
-    }
-
     let isCancelled = false;
 
-    if (!isCancelled) {
-      getBlockNumber();
-    }
+    alchemy.core.getBlockWithTransactions(parseInt(blockNumber)).then((res) => {
+      if (!isCancelled) {
+        setBlockWithTransactions(res);
+      }
+    });
 
     return () => {
       isCancelled = true;
-    }
+    };
   }, [blockNumber]);
 
   useMemo(() => console.log(blockWithTransactions), [blockWithTransactions]);
 
-  // TODO: Add Route to components
+  // TODO: Add Route to components and Add loading across components
 
   return (
     <div className="App">
@@ -108,7 +104,11 @@ function App() {
           </button>
         </form>
 
-        {showTransactionDetails ? (<TransactionDetails txnHash={txnHash} />) : <></>}
+        {showTransactionDetails ? (
+          <TransactionDetails txnHash={txnHash} />
+        ) : (
+          <></>
+        )}
 
         {blockWithTransactions ? (
           <>
