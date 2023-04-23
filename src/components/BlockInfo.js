@@ -1,4 +1,4 @@
-function BlockInfo({ blockWithTransactions: blockInfo }) {
+function BlockInfo({ blockWithTransactions: blockInfo, toggleTransactions }) {
   const gasUsedPercent =
     (blockInfo.gasUsed.toString() / blockInfo.gasLimit.toString()) * 100;
 
@@ -38,7 +38,7 @@ function BlockInfo({ blockWithTransactions: blockInfo }) {
           <div className="basis-1/4">Gas Used: </div>
           <div className="basis-3/4 flex items-center gap-8">
             <div className="">
-              {new Intl.NumberFormat().format(blockInfo.gasUsed.toString())}
+              {`${new Intl.NumberFormat().format(blockInfo.gasUsed.toString())} (${gasUsedPercent.toFixed(2)}%)`}
             </div>
             <progress
               className="progress w-56"
@@ -56,7 +56,7 @@ function BlockInfo({ blockWithTransactions: blockInfo }) {
         <div className="flex gap-2 mb-4">
           <div className="basis-1/4">Transactions: </div>
           <div className="basis-3/4 text-blue-500 hover:text-blue-700 cursor-pointer">
-            <a onClick="">{`${blockInfo.transactions.length} transactions`}</a>
+            <button onClick={toggleTransactions}>{`${blockInfo.transactions.length} transactions`}</button>
           </div>
         </div>
       </div>

@@ -23,6 +23,11 @@ const alchemy = new Alchemy(settings);
 function App() {
   const [blockNumber, setBlockNumber] = useState();
   const [blockWithTransactions, setBlockWithTransactions] = useState();
+  const [showTransactions, setShowTransactions] = useState(false);
+
+  function toggleTransactions() {
+    setShowTransactions(!showTransactions);
+  }
 
   function handleBlockChange(event) {
     event.preventDefault();
@@ -90,8 +95,18 @@ function App() {
 
         {blockWithTransactions ? (
           <>
-            <BlockInfo blockWithTransactions={blockWithTransactions} />
-            {/* <Transactions blockTransactions={blockWithTransactions.transactions}/> */}
+            <BlockInfo
+              blockWithTransactions={blockWithTransactions}
+              toggleTransactions={toggleTransactions}
+            />
+
+            {showTransactions ? (
+              <Transactions
+                blockTransactions={blockWithTransactions.transactions}
+              />
+            ) : (
+              <></>
+            )}
           </>
         ) : (
           <div>
