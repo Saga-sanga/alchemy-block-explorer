@@ -65,7 +65,7 @@ function App() {
   return (
     <div className="App">
       {/* Main content body */}
-      <main className="flex flex-col gap-8 min-h-screen bg-[url('./assets/ethereum.svg')] bg-cover bg-fixed bg-center bg-[length:80%_80%] bg-no-repeat">
+      <main className="flex flex-col gap-8 min-h-screen bg-[url('./assets/ethereum.svg')] bg-fixed bg-center bg-[length:80%_80%] bg-no-repeat">
         <Layout setBlockNumber={setBlockNumber}>
           <Switch>
             <Route path="/txn-details">
