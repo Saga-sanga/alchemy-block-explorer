@@ -23,7 +23,7 @@ function TransactionDetails({ txnHash }) {
 
   console.log(transactionReceipt);
   return transactionReceipt ? (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 bg-base-300 bg-opacity-60 py-6">
       <span className="text-2xl font-bold">Transaction Details</span>
       <div className="flex flex-col mx-10 text-left w-full mx-auto max-w-5xl">
         <div className="flex gap-2 mb-4">
@@ -72,7 +72,7 @@ function TransactionDetails({ txnHash }) {
       </div>
     </div>
   ) : (
-    <div>
+    <div className="bg-base-300 bg-opacity-60 py-6">
       <div>Loading...</div>
       <progress className="progress w-56"></progress>
     </div>

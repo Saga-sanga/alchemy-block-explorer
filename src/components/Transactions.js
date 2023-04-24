@@ -74,7 +74,7 @@ function Transactions({ blockTransactions, handleTransactionClick }) {
       </div>
     </div>
   ) : (
-    <div>
+    <div className="bg-base-300 bg-opacity-60 py-6">
       <div>Loading...</div>
       <progress className="progress w-56"></progress>
     </div>
