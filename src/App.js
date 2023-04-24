@@ -1,10 +1,12 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import { useEffect, useMemo, useState } from "react";
 import BlockInfo from "./components/BlockInfo";
+import { Route, Switch, useHistory } from "react-router-dom";
 
 import "./App.css";
 import Transactions from "./components/Transactions";
 import TransactionDetails from "./components/TransactionDetails";
+import Layout from "./components/Layout";
 
 // Refer to the README doc for more information about using API
 // keys in client-side code. You should never do this in production
@@ -24,29 +26,16 @@ export const alchemy = new Alchemy(settings);
 function App() {
   const [blockNumber, setBlockNumber] = useState(0);
   const [blockWithTransactions, setBlockWithTransactions] = useState(null);
-  const [showTransactions, setShowTransactions] = useState(false);
-  const [showTransactionDetails, setShowTransactionDetails] = useState(false);
   const [txnHash, setTxnHash] = useState("");
 
-  function toggleTransactions() {
-    setShowTransactions(!showTransactions);
-  }
+  const history = useHistory();
 
   function handleTransactionClick(event) {
     event.preventDefault();
 
     console.log(event.currentTarget.value);
     setTxnHash(event.currentTarget.value);
-    setShowTransactionDetails(true);
-    // Push Route to transaction details, pass transaction details to Component
-  }
-
-  function handleBlockChange(event) {
-    event.preventDefault();
-    const input = document.getElementById("search").value;
-
-    console.log(input);
-    setBlockNumber(input);
+    history.push("/txn-details");
   }
 
   useEffect(() => {
@@ -73,65 +62,29 @@ function App() {
 
   useMemo(() => console.log(blockWithTransactions), [blockWithTransactions]);
 
-  // TODO: Add Route to components and Add loading across components
-
   return (
     <div className="App">
-      {/* Navbar */}
-      <div className="navbar bg-base-100">
-        <a
-          href="/"
-          className="btn btn-ghost hover:bg-transparent normal-case text-xl"
-        >
-          BlockExplorer
-        </a>
-      </div>
-
       {/* Main content body */}
       <main className="flex flex-col gap-8">
-        <form
-          className="flex gap-2 justify-center"
-          onSubmit={handleBlockChange}
-        >
-          <input
-            id="search"
-            type="text"
-            placeholder="Enter Block Number"
-            className="input input-bordered w-full max-w-xs"
-          />
-          <button type="submit" className="btn btn-primary">
-            Search
-          </button>
-        </form>
-
-        {showTransactionDetails ? (
-          <TransactionDetails txnHash={txnHash} />
-        ) : (
-          <></>
-        )}
-
-        {blockWithTransactions ? (
-          <>
-            <BlockInfo
-              blockWithTransactions={blockWithTransactions}
-              toggleTransactions={toggleTransactions}
-            />
-
-            {showTransactions ? (
+        <Layout setBlockNumber={setBlockNumber}>
+          <Switch>
+            <Route path="/txn-details">
+              <TransactionDetails txnHash={txnHash} />
+            </Route>
+            <Route path="/transactions">
               <Transactions
-                blockTransactions={blockWithTransactions.transactions}
+                blockTransactions={blockWithTransactions}
                 handleTransactionClick={handleTransactionClick}
               />
-            ) : (
-              <></>
-            )}
-          </>
-        ) : (
-          <div>
-            <div>Loading...</div>
-            <progress className="progress w-56"></progress>
-          </div>
-        )}
+            </Route>
+            <Route exact path="/">
+              <BlockInfo
+                blockWithTransactions={blockWithTransactions}
+                setBlockNumber={setBlockNumber}
+              />
+            </Route>
+          </Switch>
+        </Layout>
       </main>
     </div>
   );

@@ -1,20 +1,22 @@
 import { Utils } from "alchemy-sdk";
 import clipboard from "../assets/clipboard.svg";
 
-function Transactions({
-  blockTransactions: transactions,
-  handleTransactionClick,
-}) {
+function Transactions({ blockTransactions, handleTransactionClick }) {
   function copyHandler(e) {
-    // console.log(e.currentTarget.value);
     navigator.clipboard
       .writeText(e.currentTarget.value)
       .then(() => alert("Text copied to clipboard"))
       .catch((err) => console.error("Error: ", err));
   }
-  // console.log(transactions[0])
-  return (
-    <>
+
+  let transactions;
+
+  if (blockTransactions) {
+    transactions = blockTransactions.transactions;
+  }
+
+  return transactions ? (
+    <div>
       <h2 className="text-center text-3xl">Transactions</h2>
       <div className="overflow-x-auto max-w-5xl mx-auto">
         <table className="table w-full">
@@ -70,7 +72,12 @@ function Transactions({
           </tbody>
         </table>
       </div>
-    </>
+    </div>
+  ) : (
+    <div>
+      <div>Loading...</div>
+      <progress className="progress w-56"></progress>
+    </div>
   );
 }
 
