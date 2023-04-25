@@ -21,6 +21,8 @@ const settings = {
 //
 // You can read more about the packages here:
 //   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
+
+// TODO: Create Home Page containing chain data, list of latest blocks and transactions
 export const alchemy = new Alchemy(settings);
 
 function App() {
